@@ -37,7 +37,7 @@ window.addEventListener('DOMContentLoaded',function(){
 
     //Timer
 
-    let deadline = '2019-09-08';
+    let deadline = '2019-10-08';
 
     function getTimeRemaining(endtime){
         let t = Date.parse(endtime) - Date.parse(new Date()),//miliseconds
@@ -94,4 +94,27 @@ window.addEventListener('DOMContentLoaded',function(){
 
     setClock('timer', deadline);
 
+    //Modal
+
+    let more = document.querySelector('.more'),
+        tabMore = document.querySelector('.description-btn'),
+        overlay = document.querySelector('.overlay'),
+        close =document.querySelector('.popup-close');
+    
+    more.addEventListener('click', ()=>{
+        overlay.style.display = 'block';
+        this.classList.add('more-splash');
+        document.body.style.overflow = 'hidden';
+    });
+    tabMore.addEventListener('click', function(){
+        overlay.style.display = 'block';
+        this.classList.add('more-splash');
+        document.body.style.overflow = 'hidden';
+    });
+    close.addEventListener('click', ()=>{
+        overlay.style.display = 'none';
+        more.classList.remove('more-splash');
+        document.body.style.overflow = '';
+    });
+    
 });
