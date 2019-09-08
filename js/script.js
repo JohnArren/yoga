@@ -103,18 +103,55 @@ window.addEventListener('DOMContentLoaded',function(){
     
     more.addEventListener('click', ()=>{
         overlay.style.display = 'block';
-        this.classList.add('more-splash');
+        this.classList.add('.more-splash');
         document.body.style.overflow = 'hidden';
     });
     tabMore.addEventListener('click', function(){
         overlay.style.display = 'block';
-        this.classList.add('more-splash');
+        this.classList.add('.more-splash');
         document.body.style.overflow = 'hidden';
     });
     close.addEventListener('click', ()=>{
         overlay.style.display = 'none';
-        more.classList.remove('more-splash');
+        more.classList.remove('.more-splash');
         document.body.style.overflow = '';
     });
     
+    // Form
+
+    let message = {
+        loading: 'Загрузка ...',
+        success: 'Спасибо, скоро мы с вами свяжемся !',
+        failure: 'Что-то пошло не так'
+    };
+
+    let form = document.querySelector('.main-form'),
+        input = form.getElementsByTagName('input'),
+        statusMessage = document.createElement('div');
+
+        statusMessage.classList.add('status');
+
+    form.addEventListener('submit', function(event){
+        event.preventDefault();
+        form.appendChild(statusMessage);
+
+        let request = new XMLHttpRequest();
+        request.open('POST', 'server.php');
+        request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+        let formData = new FormData(form);
+        request.send(formData);
+
+        request.addEventListener('readystatechange', ()=>{
+            if (request.readyState < 4){
+                statusMessage.innerHTML = message.loading;
+            }else if (request.readyState === 4 && request.status == 200){
+
+                statusMessage.innerHTML = message.success;
+            } else{
+                statusMessage.innerHTML = message.failure;
+            }
+        });
+    });    
+
 });
